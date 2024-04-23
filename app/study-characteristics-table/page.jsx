@@ -4,11 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { Checkbox, Table } from 'antd';
 import { columns } from '@/misc/parsedData';
 import jsonData from '@/misc/data.json'
+import { Col, Row } from 'antd';
+import { Select, Collapse } from 'antd';
+const { Option } = Select;
+const { Panel } = Collapse;
 
 const data = [];
 
 for (let i = 0; i < jsonData.rs.length; i++) {
-  console.log(jsonData.rs[i]?.['Median On-Treatment Duration (mo) | Treatment'])
   data.push({
     key: i,
     "nct": jsonData.rs[i]?.NCT,
@@ -47,10 +50,8 @@ for (let i = 0; i < jsonData.rs.length; i++) {
     'BLACK OR AFRICAN AMERICAN': jsonData.rs[i]?.['Race - N (%) | Black or African American'],
     'Nat. Hawaiian or Pac. Islander': jsonData.rs[i]?.['Race - N (%) | Nat. Hawaiian or Pac. Islander'],
     'OTHER': jsonData.rs[i]?.['Race - N (%) | Other'],
-    'UNKNOWN' : jsonData.rs[i]?.['Race - N (%) | Unknown'],
+    'UNKNOWN': jsonData.rs[i]?.['Race - N (%) | Unknown'],
     WHITE: jsonData.rs[i]?.['Race - N (%) | White'],
-    
-
 
     "REGION - N (%)": {
       "NORTH AMERICA": {
@@ -230,14 +231,52 @@ for (let i = 0; i < jsonData.rs.length; i++) {
       TREATMENT: jsonData.rs[i]?.['TYPE OF THERAPY']?.TREATMENT,
       CONTROL: jsonData.rs[i]?.['TYPE OF THERAPY']?.CONTROL
     }
-
-
-
-
   });
 }
 
-const defaultCheckedList = columns.map((item) => item.key);
+const defaultCheckedList = []
+
+for(let i=0; i<5; i++){
+  defaultCheckedList.push(columns[i].key)
+}
+
+const MyExpandableDropdown = ({ checkedList, setCheckedList, options }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <Collapse
+      bordered={false}
+      activeKey={expanded ? ['1'] : []}
+      expandIconPosition="right"
+      onChange={handleExpand}
+    >
+      <Panel header="Show/Hide Columns" key="1">
+        <Select
+          mode="multiple"
+          style={{ width: '100%' }}
+          placeholder="Show/Hide Columns"
+          value={checkedList}
+          onChange={(value) => {
+            setCheckedList(value);
+          }}
+        >
+          {options.map((option) => (
+            <Option key={option.value} value={option.value}>
+              {option.label}
+            </Option>
+          ))}
+        </Select>
+      </Panel>
+    </Collapse>
+  );
+};
+
+
+
 
 
 // let modifiedCols = {};
@@ -293,23 +332,54 @@ const App = () => {
 
   return (
     <>
-      <Checkbox.Group
-        value={checkedList}
-        options={options}
-        onChange={(value) => {
-          setCheckedList(value);
-        }}
-      />
-      <Table
-        columns={newColumns}
-        dataSource={data}
-        bordered
-        size="middle"
-        scroll={{
-          x: 'calc(700px + 50%)',
-          y: 1500,
-        }}
-      />
+      <Row>
+        <Col span={4}>
+          <MyExpandableDropdown
+            checkedList={checkedList}
+            setCheckedList={setCheckedList}
+            options={options}
+          />
+
+          {/* <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Select options"
+            value={checkedList}
+            onChange={(value) => {
+              setCheckedList(value);
+            }}
+          >
+            {options.map((option) => (
+              <Option key={option.value} value={option.value}>
+                {option.label}
+              </Option>
+            ))}
+          </Select>
+
+
+          <Checkbox.Group
+            value={checkedList}
+            options={options}
+            onChange={(value) => {
+              setCheckedList(value);
+            }}
+          /> */}
+        </Col>
+        <Col span={20}>
+        <div className="custom-table">
+          <Table
+            columns={newColumns}
+            dataSource={data}
+            bordered
+            size="middle"
+            scroll={{
+              x: 'calc(700px + 50%)',
+              y: 1500,
+            }}
+          />
+          </div>
+        </Col>
+      </Row>
     </>
   )
 }

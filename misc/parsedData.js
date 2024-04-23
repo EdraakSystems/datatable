@@ -1,11 +1,19 @@
+const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
+
 export const columns = [
-  
     {
         title: '_NCT|NCT',
         dataIndex: 'nct',
         key: 5,
         width: 200,
         sorter: (a, b) => a.nct - b.nct,
+        fixed: 'left',
     },
     {
         title: 'PMID',
@@ -13,6 +21,7 @@ export const columns = [
         key: 6,
         width: 200,
         sorter: (a, b) => a.PMID - b.PMID,
+        fixed: 'left',
     },
     {
         title: 'TRIAL NAME',
@@ -54,6 +63,7 @@ export const columns = [
         dataIndex: 'TREATMENT ARM 1 REGIMEN',
         key: 11,
         width: 200,
+        render: text => truncateText(text, 30),
     },
     {
         title: 'TOTAL PARTICIPANTS - N',
