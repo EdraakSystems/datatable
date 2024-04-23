@@ -63,7 +63,7 @@ export const columns = [
         dataIndex: 'TREATMENT ARM 1 REGIMEN',
         key: 11,
         width: 200,
-        render: text => truncateText(text, 30),
+        render: text => truncateText(text, 10),
     },
     {
         title: 'TOTAL PARTICIPANTS - N',

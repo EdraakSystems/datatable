@@ -371,7 +371,8 @@ const App = () => {
             columns={newColumns}
             dataSource={data}
             bordered
-            size="middle"
+            pagination={{ pageSize: 20 }}
+            size="small"
             scroll={{
               x: 'calc(700px + 50%)',
               y: 1500,
