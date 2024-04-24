@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useDeferredValue } from 'react';
 import { Checkbox, Table } from 'antd';
 import { columns } from '@/misc/parsedData';
 import jsonData from '@/misc/data.json'
 import { Col, Row } from 'antd';
 import { Select, Collapse } from 'antd';
+import { DataFilters } from '@/components/data-filters';
 const { Option } = Select;
 const { Panel } = Collapse;
 
@@ -236,7 +237,7 @@ for (let i = 0; i < jsonData.rs.length; i++) {
 
 const defaultCheckedList = []
 
-for(let i=0; i<5; i++){
+for (let i = 0; i < 5; i++) {
   defaultCheckedList.push(columns[i].key)
 }
 
@@ -246,6 +247,10 @@ const MyExpandableDropdown = ({ checkedList, setCheckedList, options }) => {
   const handleExpand = () => {
     setExpanded(!expanded);
   };
+
+
+
+
 
   return (
     <Collapse
@@ -321,6 +326,11 @@ const MyExpandableDropdown = ({ checkedList, setCheckedList, options }) => {
 
 const App = () => {
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
+  const [selectedFilters, setSelectedFilters] = useState({})
+  const [filteredData, setFilteredData] = useState(data || [])
+
+  const defferedFilters = useDeferredValue(selectedFilters)
+
   const options = columns.map(({ key, title }) => ({
     label: title,
     value: key,
@@ -330,10 +340,25 @@ const App = () => {
     hidden: !checkedList.includes(item.key),
   }));
 
+  const handleSelectedFilters = (key, value) => {
+    if (key) setSelectedFilters(prev => ({ ...prev, [key]: value }))
+  }
+
+  useEffect(() => {
+    const filtered = data.filter(item =>
+      Object.entries(defferedFilters).every(([filterKey, filterValue]) =>
+        filterValue.split('+').some(part =>
+          item[filterKey].toLowerCase().includes(part.trim().toLowerCase())
+        )
+      )
+    );
+    setFilteredData(filtered);
+  }, [data, defferedFilters]);
+
   return (
     <>
       <Row>
-        <Col span={4}>
+        <Col span={24}>
           <MyExpandableDropdown
             checkedList={checkedList}
             setCheckedList={setCheckedList}
@@ -365,19 +390,22 @@ const App = () => {
             }}
           /> */}
         </Col>
-        <Col span={20}>
-        <div className="custom-table">
-          <Table
-            columns={newColumns}
-            dataSource={data}
-            bordered
-            pagination={{ pageSize: 20 }}
-            size="small"
-            scroll={{
-              x: 'calc(700px + 50%)',
-              y: 1500,
-            }}
-          />
+        <Col span={5}>
+          <DataFilters onClear={() => setSelectedFilters({})} selectedFilters={selectedFilters} onSelect={handleSelectedFilters} />
+        </Col>
+        <Col span={19}>
+          <div className="custom-table">
+            <Table
+              columns={newColumns}
+              dataSource={filteredData}
+              bordered
+              pagination={{ pageSize: 20 }}
+              size="small"
+              scroll={{
+                x: 'calc(700px + 50%)',
+                y: 1500,
+              }}
+            />
           </div>
         </Col>
       </Row>
