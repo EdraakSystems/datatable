@@ -25,10 +25,13 @@ export const DataFilters = ({ onSelect, selectedFilters, onClear }) => {
                 filters.map((filter) => {
                     return <div key={filter.title} className=" ">
                         <h2 className="py-4 text-[14px] uppercase font-semibold">{filter.title}</h2>
-                        <div className="flex flex-col gap-y-2 px-2">{filter.filters.map(item =>
-                            <SelectInput selected={selectedFilters[filter.key] === item} key={item} title={item} onClick={() => handleSelectFilter(filter.key, item)} />
-                        )
-                        }
+                        <div className="flex flex-col gap-y-2 px-2">
+                            <SelectInput selected={selectedFilters[filter.key] === "All"} title="All" onClick={() => handleSelectFilter(filter.key, "All")} />
+                            {filter.filters.map(item =>
+
+                                <SelectInput selected={selectedFilters[filter.key] === item} key={item} title={item} onClick={() => handleSelectFilter(filter.key, item)} />
+                            )
+                            }
                         </div>
                     </div>
                 }

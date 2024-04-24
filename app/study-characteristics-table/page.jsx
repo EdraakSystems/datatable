@@ -345,13 +345,27 @@ const App = () => {
     if (key) setSelectedFilters(prev => ({ ...prev, [key]: value }))
   }
 
+  // useEffect(() => {
+  //   const filtered = data.filter(item =>
+  //     Object.entries(defferedFilters).every(([filterKey, filterValue]) =>
+  //       filterValue?.split('+').some(part =>
+  //         item[filterKey].toLowerCase().includes(part.trim().toLowerCase())
+  //       )
+  //     )
+  //   );
+  //   setFilteredData(filtered);
+  // }, [data, defferedFilters]);
   useEffect(() => {
     const filtered = data.filter(item =>
-      Object.entries(defferedFilters).every(([filterKey, filterValue]) =>
-        filterValue.split('+').some(part =>
-          item[filterKey].toLowerCase().includes(part.trim().toLowerCase())
-        )
-      )
+      Object.entries(defferedFilters).every(([filterKey, filterValue]) => {
+        if (filterValue === "All") {
+          return true;
+        } else {
+          return filterValue?.split('+').some(part =>
+            item[filterKey].toLowerCase().includes(part.trim().toLowerCase())
+          );
+        }
+      })
     );
     setFilteredData(filtered);
   }, [data, defferedFilters]);
