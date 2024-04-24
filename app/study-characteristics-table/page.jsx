@@ -258,6 +258,7 @@ const MyExpandableDropdown = ({ checkedList, setCheckedList, options }) => {
       activeKey={expanded ? ['1'] : []}
       expandIconPosition="right"
       onChange={handleExpand}
+      className="mb-2"
     >
       <Panel header="Show/Hide Columns" key="1">
         <Select
@@ -357,12 +358,13 @@ const App = () => {
 
   return (
     <>
-      <Row>
+      <Row gutter={10}>
         <Col span={24}>
           <MyExpandableDropdown
             checkedList={checkedList}
             setCheckedList={setCheckedList}
             options={options}
+
           />
 
           {/* <Select
@@ -391,7 +393,10 @@ const App = () => {
           /> */}
         </Col>
         <Col span={5}>
-          <DataFilters onClear={() => setSelectedFilters({})} selectedFilters={selectedFilters} onSelect={handleSelectedFilters} />
+          <DataFilters
+            onClear={() => setSelectedFilters({})}
+            selectedFilters={selectedFilters}
+            onSelect={handleSelectedFilters} />
         </Col>
         <Col span={19}>
           <div className="custom-table">
