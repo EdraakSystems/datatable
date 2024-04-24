@@ -13,7 +13,6 @@ export const columns = [
         key: 5,
         width: 200,
         sorter: (a, b) => a.nct - b.nct,
-        fixed: 'left',
     },
     {
         title: 'PMID',
@@ -21,7 +20,6 @@ export const columns = [
         key: 6,
         width: 200,
         sorter: (a, b) => a.PMID - b.PMID,
-        fixed: 'left',
     },
     {
         title: 'TRIAL NAME',

@@ -368,7 +368,7 @@ const App = () => {
             checkedList={checkedList}
             setCheckedList={setCheckedList}
             options={options}
-
+            className='bg-slate-100'
           />
 
           {/* <Select
@@ -396,13 +396,14 @@ const App = () => {
             }}
           /> */}
         </Col>
-        <Col span={5}>
+
+        <Col  xs={24} sm={24} md={24} lg={5} xl={5}>
           <DataFilters
             onClear={() => setSelectedFilters({})}
             selectedFilters={selectedFilters}
             onSelect={handleSelectedFilters} />
         </Col>
-        <Col span={19}>
+        <Col xs={24} sm={24} md={24} lg={19} xl={19}>
           <div className="custom-table">
             <Table
               columns={newColumns}
@@ -417,6 +418,8 @@ const App = () => {
             />
           </div>
         </Col>
+
+
       </Row>
     </>
   )
