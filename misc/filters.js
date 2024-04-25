@@ -3,7 +3,7 @@ export const filters = [
     {
         title: "Type of Therapy",
         //Add Column Name here for filtering
-        key: '',
+        key: 'Type of Therapy',
         filters: ["Triplet", "ARPI-doublet", "Chemo-doublet"]
     },
     {
@@ -19,7 +19,7 @@ export const filters = [
     {
         title: "Trial Version",
         //Add Column Name here for filtering
-        key: "",
+        key: "Original/Follow Up",
         filters: ["Original", "Follow up"]
     },
 ]

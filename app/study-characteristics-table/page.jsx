@@ -21,6 +21,8 @@ for (let i = 0; i < jsonData.rs.length; i++) {
     "TREATMENT ARM(S)": jsonData.rs[i]?.Treatment_Arms,
     "Control Arm": jsonData.rs[i]?.Control_Arm,
     "qw4hd": jsonData.rs[i]?.Class_of_Agent_in_Treatment_Arm_1,
+    "Type of Therapy": jsonData.rs[i]["Type of Therapy"],
+    "Original/Follow Up": jsonData.rs[i]["Original/Follow Up"],
     "TREATMENT ARM 1 REGIMEN": jsonData.rs[i]?.['Treatment Arm 1 Regimen'],
     'TOTAL PARTICIPANTS - N': jsonData.rs[i]?.['Total Participants - N'],
     'TREATMENT ARM - N': jsonData.rs[i]?.['TREATMENT ARM - N'],
@@ -360,8 +362,10 @@ const App = () => {
     setFilteredData(filtered);
   }, [data, defferedFilters]);
 
+  console.log({ data })
+
   return (
-    <>
+    <div className="container">
       <Row gutter={10}>
         <Col span={24}>
           <MyExpandableDropdown
@@ -418,7 +422,7 @@ const App = () => {
           </div>
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 

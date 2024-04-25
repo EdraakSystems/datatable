@@ -1,9 +1,9 @@
 const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...';
+        return text.substring(0, maxLength) + '...';
     }
     return text;
-  };
+};
 
 
 export const columns = [
@@ -1082,6 +1082,12 @@ export const columns = [
         title: 'TYPE OF THERAPY',
         key: 39,
         width: 200,
-        dataIndex: 'TYPE OF THERAPY'
-    }    
+        dataIndex: 'Type of Therapy'
+    },
+    {
+        title: 'Original/Follow Up',
+        key: 39,
+        width: 200,
+        dataIndex: 'Original/Follow Up'
+    }
 ];
