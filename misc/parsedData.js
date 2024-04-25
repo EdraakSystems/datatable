@@ -1086,7 +1086,7 @@ export const columns = [
     },
     {
         title: 'Original/Follow Up',
-        key: 39,
+        key: 40,
         width: 200,
         dataIndex: 'Original/Follow Up'
     }
